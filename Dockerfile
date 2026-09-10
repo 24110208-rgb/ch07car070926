@@ -1,8 +1,5 @@
-
-# Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-# Click nbfs://nbhost/SystemFileSystem/Templates/Other/Dockerfile to edit this template
-# Bước 1: Sử dụng hình ảnh Tomcat chính thức làm môi trường chạy
-FROM tomcat:9.0-jdk11-openjdk-slim
+# Bước 1: Sử dụng hình ảnh Tomcat 10 chính thức làm môi trường chạy
+FROM tomcat:10.1-jdk17-temurin-jammy
 
 # Bước 2: Xóa các ứng dụng mặc định không cần thiết của Tomcat để tránh xung đột
 RUN rm -rf /usr/local/tomcat/webapps/*
