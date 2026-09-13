@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.List, business.Product"%>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,6 +58,54 @@
         </style>
     </head>
     <body>
+        <%
+            // 1. Kiểm tra xem Servlet đang yêu cầu hiển thị màn hình nào
+            String manHinh = (String) request.getAttribute("manHinh");
+
+            // 2. Nếu là màn hình đăng ký (Trang 2) thì chỉ hiện Form đăng ký
+            if ("show_register".equals(manHinh)) {
+        %>        
+        <h2>Download registration</h2>
+        <p>To register for our downloads, enter your name and email address below. Then, click on the Submit button.</p>
+
+        <form action="OrderServlet" method="post">
+            <label>Email:</label>
+            <input type="email" name="email" required />
+            <br/><br/>
+
+            <label>First Name:</label>
+            <input type="text" name="firstName" required />
+            <br/><br/>
+
+            <label>Last Name:</label>
+            <input type="text" name="lastName" required />
+            <br/><br/>
+
+            <input type="submit" value="Register" />
+        </form>  
+        
+        <%
+        // 3. Ngược lại, mặc định ban đầu vào sẽ hiện Danh sách Album (Trang 1)
+        } else {
+         %>
+        <h2>List of albums</h2>
+        <%
+            java.util.List<business.Product> danhSachCuaToi = (java.util.List<business.Product>) request.getAttribute("products");
+
+            if (danhSachCuaToi != null) {
+                for (business.Product album : danhSachCuaToi) {
+        %>
+                    <a href="OrderServlet?productCode=<%= album.getCode() %>"><%= album.getDescription() %></a>
+                    <br/>
+        <%
+                }
+            }
+        %>
+        <%
+            }
+        %>
+    
+    <%--  
         <h2>CD list</h2>
         
         <table>
@@ -87,5 +138,7 @@
                 %>
             </tbody>
         </table>
+    --%>
+
     </body>
 </html>

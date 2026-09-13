@@ -1,15 +1,12 @@
-# Bước 1: Sử dụng hình ảnh Tomcat 10 chính thức làm môi trường chạy
-FROM tomcat:10.1-jdk17-temurin-jammy
+# 1. Sử dụng hệ điều hành siêu nhẹ chứa sẵn Tomcat 10 chạy gói Jakarta phù hợp Render
+FROM tomcat:10.1-jdk17-slim
 
-# Bước 2: Xóa các ứng dụng mặc định không cần thiết của Tomcat để tránh xung đột
+# 2. Dọn dẹp các thư mục trang web mặc định của Tomcat để tránh bị kẹt lỗi
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Bước 3: Copy file .war từ thư mục dist trong máy bạn vào thư mục webapps của Tomcat
-# Nó sẽ tự động giải nén và chạy ứng dụng tại đường dẫn /ch07car070926
-COPY dist/ch07car070926.war /usr/local/tomcat/webapps/ch07car070926.war
+# 3. Bốc toàn bộ thư mục web đã biên dịch thành công của Hân bỏ vào máy chủ Render
+COPY build/web /usr/local/tomcat/webapps/ROOT
 
-# Bước 4: Mở cổng 8080 để máy tính có thể truy cập vào môi trường Docker
+# 4. Mở cổng mạng Port 8080 để Render có thể cấp đường link công khai
 EXPOSE 8080
-
-# Bước 5: Lệnh kích hoạt Tomcat Server khi khởi động container
 CMD ["catalina.sh", "run"]

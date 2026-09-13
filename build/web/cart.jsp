@@ -4,8 +4,49 @@
     Author     : LAPTOP
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.List, business.Product"%>
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>The Downloads Page</title>
+        <style>
+            table { border-collapse: collapse; width: 40%; }
+            th, td { border: 1px solid black; padding: 6px; text-align: left; }
+        </style>
+    </head>
+    <body>
+
+        <h2>Downloads</h2>
+        <h3>86 (the band) - True Life Songs and Pictures</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Song title</th>
+                    <th>Audio Format</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                    List<Product> danhSachBaiHat = (List<Product>) request.getAttribute("products");
+                    if (danhSachBaiHat != null) {
+                        for (Product song : danhSachBaiHat) {
+                %>
+                            <tr>
+                                <td><%= song.getDescription() %></td>
+                                <td><a href="#" style="color: purple;">MP3</a></td>
+                            </tr>
+                <%
+                        }
+                    }
+                %>
+            </tbody>
+        </table>
+    </body>    
+    
+    
+    <%--
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Murach's Java Servlets and JSP</title>
@@ -84,4 +125,5 @@
         <!-- Nút thanh toán -->
         <input type="submit" value="Checkout" class="btn-action" style="margin-top: 5px;">
     </body>
+    --%>
 </html>
